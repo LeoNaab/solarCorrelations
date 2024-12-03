@@ -1,26 +1,32 @@
-
-# Code copied form NSRDB
+import dotenv
 import requests
 import pandas as pd
 import urllib.parse
 import time
+import dotenv
 
-API_KEY = "{{YOUR_API_KEY}}"
-EMAIL = "insert.your.email@fake.com"
-BASE_URL = "https://developer.nrel.gov/api/nsrdb/v2/solar/full-disc-download.json?"
+from dotenv import dotenv_values
+ENV = dotenv_values(".env")
+YOUR_API_KEY = ENV["YOUR_API_KEY"]
+API_KEY = f"{YOUR_API_KEY}"
+print(YOUR_API_KEY)
+
+EMAIL = "leownaab@gmail.com"
+BASE_URL = "https://developer.nrel.gov/api/nsrdb/v2/solar/nsrdb-GOES-aggregated-v4-0-0-download.csv?"
 POINTS = [
-'1712931'
+'458885'
 ]
 
 def main():
     input_data = {
-        'attributes': 'ghi',
+        'attributes': 'ghi,dni',
         'interval': '60',
+        'to_utc': 'false',
 
         'api_key': API_KEY,
         'email': EMAIL,
     }
-    for name in ['2019','2020','2021','2022']:
+    for name in ['1998','1999','2000','2001','2002','2003','2004','2005','2006','2007','2008','2009','2010','2011','2012','2013','2014','2015','2016','2017','2018','2019','2020','2021','2022','2023']:
         print(f"Processing name: {name}")
         for id, location_ids in enumerate(POINTS):
             input_data['names'] = [name]
@@ -28,13 +34,14 @@ def main():
             print(f'Making request for point group {id + 1} of {len(POINTS)}...')
 
             if '.csv' in BASE_URL:
-                url = BASE_URL + urllib.parse.urlencode(data, True)
+                url = BASE_URL + urllib.parse.urlencode(input_data, True)
                 # Note: CSV format is only supported for single point requests
                 # Suggest that you might append to a larger data frame
-                data = pd.read_csv(url)
+                print(url)
+                data = pd.read_csv(url,  engine='python')
                 print(f'Response data (you should replace this print statement with your processing): {data}')
                 # You can use the following code to write it to a file
-                # data.to_csv('SingleBigDataPoint.csv')
+                data.to_csv(f'{POINTS[0]}-{name}.csv')
             else:
                 headers = {
                   'x-api-key': API_KEY
