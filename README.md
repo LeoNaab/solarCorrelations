@@ -20,8 +20,9 @@ Because of this, projects that connect the grids of different regions have becom
 a high voltage DC cable that connects New Mexico to southern California. Ideally this HVDC line would provide *independent* sources of
 solar electricity to either California or New Mexico.
 
-In this project, I want to measure the empirical independence or correlation of New Mexico and California's expected sunlight.
-I will use a variety of techniques to get an understanding of the relationship between their respective solar irradiance.
+In this project, we want to measure the empirical independence or correlation of New Mexico and California's expected sunlight.
+We will use a variety of techniques to get an understanding of the relationship between their respective solar irradiance. And we want to
+categorize the benefit this could provide when an electrical grid relies mainly solar power.
 
  ## Methods
 
@@ -36,4 +37,21 @@ and look at how related these power sources are. On top of this, we can remove s
 at the covariance of individual months, and also look at extreme deviations from the mean, e.g. multiple standard deviations, to see if
 they are likely to be shared between states.
 
-There are multiple other statistical analyses that can be run on this dataset.
+There are multiple other statistical analyses we will run on the dataset.
+
+Firstly, the data needed to be converted from hourly averages for Watts per square (W/m^2) into *daily* sums of irradiance, with units Watt-hours per meter squared (Wh/m^2). In order to do this,
+the hourly results just need to be summed for every 24 hour period. Because the data is hourly and the value for each hour represents an
+average wattage, we know that the energy for that hour is the same value. For this reason, we can sum the results and get daily energy
+per meter squared in each location.
+
+## Analysis
+
+Let's first get a look at our data, to see if we can recognize a distribution. We can graph the GHI for each day over the last
+24 years to get a relatively smooth representation of daily outcomes. We can see in this first figure that the distribution does
+not look to be normal, or another common distribution. While it is triangular in some ways, there is also a large spike in the 3,500 Wh/m^2 range. Because of this, we must use statistical analysis that is sound for all positive random distributions, as this data is
+currently not able to be simplified.
+
+
+![Figure 1](images/GHI_all_days.png)
+
+It is tempting at first to think that we could sum together many days in an attempt to get a distribition that approximates a normal one due to the central limit theorem, however this is not an option in this case. A main purpose of this paper is to analyze the daily variation in solar resources, so the moment we start summing different days we lose the granularity that we need for strong results.
