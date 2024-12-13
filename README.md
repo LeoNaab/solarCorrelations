@@ -55,3 +55,16 @@ currently not able to be simplified.
 ![Figure 1](images/GHI_all_days.png)
 
 It is tempting at first to think that we could sum together many days in an attempt to get a distribition that approximates a normal one due to the central limit theorem, however this is not an option in this case. A main purpose of this paper is to analyze the daily variation in solar resources, so the moment we start summing different days we lose the granularity that we need for strong results.
+
+Additionally, we can also look at the seasonal average GHI by state. We can see how the GHI is affected by the time of year, where the winter and fall seasons see a lower average GHI when compared to the spring and summer seasons. We can also see that for every season except for the winter months, the California solar grid system has a higher average GHI when compared to New Mexico.
+
+![Figure 2](images/seasonal_plot.png)
+
+We can also use the variance and covariance to measure different aspects of the data. The variances of GHI, when grouped by state,  are as follows: 
+
+Variance for California: 4550319.795
+Variance for New Mexico: 4376524.908
+
+In this case, the high variances show how variable the distribution of GHI values are around the mean, where California has a slightly higher variance than New Mexico. These values indicate how these two states experience different solar radiations throughout the year, which includes seasonal effects. This can also be seen in our previous seasonality plot, where there is a significant difference between the lower producing months (winter, fall) and the higher producing months (spring, summer).
+
+Additionally, we can also discuss the covariance matrix, when grouped by state. The covariance between California and New Mexico GHI measures how two variables change together, where the positive correlation indicates that the GHI values for both California and New Mexico generally increase and decrease together. This is potentially due to the geographical proximity and shared climates between the two neighboring states. 
