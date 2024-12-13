@@ -46,7 +46,7 @@ def n_percent_low(daily_data: pd.DataFrame, percentage):
     return out_frame
 
 
-def calculate_variance(daily_data: pd.DataFrame):
+def calculate_variance_by_states(daily_data: pd.DataFrame):
     grouping = daily_data.groupby("state")
     variance = {}
 
@@ -105,6 +105,22 @@ def seasonal_analysis(daily_data: pd.DataFrame):
     plt.show()
     return seasonal_avg
 
+def plot_statewise_distribution(daily_data: pd.DataFrame):
+    plt.figure(figsize=(12, 6))
+    sns.boxplot(x="state", y="GHI", data=daily_data)
+    plt.title("State-wise Distribution of GHI")
+    plt.xlabel("State")
+    plt.ylabel("GHI")
+    plt.xticks(rotation=45)
+    plt.show()
+
+def one_percent(daily_data: pd.DataFrame):
+    top_1_percent = daily_data.nlargest(int(0.01 * len(daily_data)), "GHI")
+    bottom_1_percent = daily_data.nsmallest(int(0.01 * len(daily_data)), "GHI")
+    print("Top 1% High GHI Days: ", top_1_percent)
+    print("Bottom 1% Low GHI Days: ", bottom_1_percent)
+    return top_1_percent, bottom_1_percent
+
 
 
 
@@ -117,8 +133,17 @@ if __name__ == "__main__":
     daily_data: pd.DataFrame = pd.read_csv("/content/drive/MyDrive/SolarCorrections/daily_data/all-locations-daily.csv")
     daily_data = daily_data[daily_data["Year"] != 2002] # type: ignore
 
+    #Histogram of the plots
     hist_plot(daily_data)
-    covariances, variances = calculate_variance(daily_data)
+    #Variance by state
+    variances = calculate_variance_by_states(daily_data)
+    #Covariance by state
     calculate_covariance_between_states(daily_data)
+    #Bivariate plots
     plot_bivariate_distribution(daily_data, "cal", "nm")
+    # Plotting GHI based off of seasons
     seasonal_analysis(daily_data)
+    # Plotting the distribution based off of states
+    plot_statewise_distribution(daily_data)
+    #My attempt at a one_percent (bottom and top 1%)
+    one_percent(daily_data)
