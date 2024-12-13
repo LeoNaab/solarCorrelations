@@ -23,6 +23,7 @@ solar electricity to either California or New Mexico.
 In this project, we want to measure the empirical independence or correlation of New Mexico and California's expected sunlight.
 We will use a variety of techniques to get an understanding of the relationship between their respective solar irradiance. And we want to
 categorize the benefit this could provide when an electrical grid relies mainly solar power.
+ ### Dataset
 
  ## Methods
 
@@ -55,6 +56,7 @@ currently not able to be simplified.
 ![Figure 1](images/GHI_all_days.png)
 
 It is tempting at first to think that we could sum together many days in an attempt to get a distribition that approximates a normal one due to the central limit theorem, however this is not an option in this case. A main purpose of this paper is to analyze the daily variation in solar resources, so the moment we start summing different days we lose the granularity that we need for strong results.
+
 Additionally, we can also look at the seasonal average GHI by state. We can see how the GHI is affected by the time of year, where the winter and fall seasons see a lower average GHI when compared to the spring and summer seasons. We can also see that for every season except for the winter months, the california solar grid system has a higher average GHI when compared to new mexico. 
 
 ![Figure 2](images/seasonal_plot.png)
@@ -79,3 +81,15 @@ There is a positive relationship between the GHI values of these California and 
 ![Figure 2](images/boxplot.png)
 
 In addition, we will also include the state-wise distribution box plot of GHI values. In this plot, each box represents the distribution of GHI values for the two different states. The central line of each box shows the median GHI value while the box’s edges represent the 25th to 75th percentile, which captures the middle 50% of the data. Based on the plot, both states have a similar range of GHI values, with extremely similar values for the maximum and minimum. California’s GHI values have slightly higher variability, as the box is slightly wider, aligning with the higher variance. Through the plot, we can also see that the median values for both states are also similar with New Mexico being slightly lower than that of California. 
+
+
+We can, however, take this data gathered from eight points, four in California and four in New Mexico, and take their average. This would be equivalent to spreading generation resources out across these points. First, we can look at the results we get from each state after averaging the GHI from the four locations within.
+
+![alt text](images/GHI_state_average.png)
+
+We can see that these states have very similar value spreads, which is somewhat expected as the points in each state share latitudes with the points in the other. We do, however, have far fewer occurences of each GHI level in general because we have filtered our dataset by state and compress the four intrastate points into one. In order to more clearly compare these sets, ee can normalize this data to get distributions that will sum to 1, and tell us the probability that a random day from the dataset lands in a given bar on the histogram.
+
+![alt text](images/GHI_all_norm_1p.png)
+
+![alt text](images/state_GHI_norm_1p.png)
+

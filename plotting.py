@@ -15,10 +15,66 @@ import numpy as np
 # variance (state vs interstate)
 
 
-def hist_plot(daily_data):
+def hist_plot_all(daily_data):
     plt.hist(x=daily_data["GHI"], bins = 200)
+    plt.title("California and New Mexico Daily GHI, 1998-2023")
+    plt.xlabel("GHI (W•h/m^2)")
+    plt.ylabel("Occurences")
+    plt.show()
+
+def hist_plot_each_state(daily_data):
+    cal_data = state_daily_average(daily_data, "cal")
+    nm_data = state_daily_average(daily_data, "nm")
+
+    plt.subplot(1, 2, 1)
+    plt.hist(x=cal_data["GHI"], bins = 200)
+    plt.title("California (4 point average), 1998-2023")
     plt.xlabel("GHI (W•h/m^2")
-    plt.ylabel("Occurances")
+    plt.ylabel("Occurences")
+
+    plt.subplot(1, 2, 2)
+    plt.hist(x=nm_data["GHI"], bins = 200)
+    plt.title("New Mexico (4 point average), 1998-2023")
+    plt.xlabel("GHI (W•h/m^2")
+    plt.ylabel("proportion of occurences")
+
+    plt.show()
+
+def hist_plot_all_norm(daily_data):
+    low = n_percent_low(daily_data, 1)["GHI"].max()
+
+    plt.hist(x=daily_data["GHI"], bins = 200, density=True)
+    plt.title("California and New Mexico Daily GHI, 1998-2023")
+    plt.xlabel("GHI (W•h/m^2)")
+    plt.ylabel("proportion of occurences")
+    line = plt.axvline(low, c="red", ls="--", label=f"1% low: {low} W•h/m^2")
+    plt.legend(handles=[line])
+
+    plt.show()
+
+def hist_plot_each_state_norm(daily_data):
+    cal_data = state_daily_average(daily_data, "cal")
+    nm_data = state_daily_average(daily_data, "nm")
+
+    nm_low = n_percent_low(nm_data, 1)['GHI'].max()
+    cal_low = n_percent_low(cal_data, 1)["GHI"].max()
+
+    plt.subplot(1, 2, 1)
+    plt.hist(x=cal_data["GHI"], bins = 200, density=True)
+    plt.title("California (4 point average), 1998-2023")
+    plt.xlabel("GHI (W•h/m^2")
+    plt.ylabel("proportion of occurences")
+    line = plt.axvline(cal_low, c="red", ls="--", label=f"1% low: {cal_low} W•h/m^2")
+    plt.legend(handles=[line])
+
+    plt.subplot(1, 2, 2)
+    plt.hist(x=nm_data["GHI"], bins = 200, density=True)
+    plt.title("New Mexico (4 point average), 1998-2023")
+    plt.xlabel("GHI (W•h/m^2")
+    plt.ylabel("proportion of occurences")
+    line = plt.axvline(nm_low, c="red", ls="--", label=f"1% low: {nm_low} W•h/m^2")
+    plt.legend(handles=[line])
+
     plt.show()
 
 
@@ -130,11 +186,15 @@ def one_percent(daily_data: pd.DataFrame):
 
 if __name__ == "__main__":
     # Get and clean data
-    daily_data: pd.DataFrame = pd.read_csv("/content/drive/MyDrive/SolarCorrections/daily_data/all-locations-daily.csv")
+    # daily_data: pd.DataFrame = pd.read_csv("/content/drive/MyDrive/SolarCorrections/daily_data/all-locations-daily.csv")
+    daily_data: pd.DataFrame = pd.read_csv("daily_data/all-locations-daily.csv")
     daily_data = daily_data[daily_data["Year"] != 2002] # type: ignore
 
     #Histogram of the plots
-    hist_plot(daily_data)
+    hist_plot_all(daily_data)
+    hist_plot_each_state(daily_data)
+    hist_plot_all_norm(daily_data)
+    hist_plot_each_state_norm(daily_data)
     #Variance by state
     variances = calculate_variance_by_states(daily_data)
     #Covariance by state
