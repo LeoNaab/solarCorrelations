@@ -23,6 +23,7 @@ solar electricity to either California or New Mexico.
 In this project, we want to measure the empirical independence or correlation of New Mexico and California's expected sunlight.
 We will use a variety of techniques to get an understanding of the relationship between their respective solar irradiance. And we want to
 categorize the benefit this could provide when an electrical grid relies mainly solar power.
+ ### Dataset
 
  ## Methods
 
@@ -55,3 +56,13 @@ currently not able to be simplified.
 ![Figure 1](images/GHI_all_days.png)
 
 It is tempting at first to think that we could sum together many days in an attempt to get a distribition that approximates a normal one due to the central limit theorem, however this is not an option in this case. A main purpose of this paper is to analyze the daily variation in solar resources, so the moment we start summing different days we lose the granularity that we need for strong results.
+
+We can, however, take this data gathered from eight points, four in California and four in New Mexico, and take their average. This would be equivalent to spreading generation resources out across these points. First, we can look at the results we get from each state after averaging the GHI from the four locations within.
+
+![alt text](images/GHI_state_average.png)
+
+We can see that these states have very similar value spreads, which is somewhat expected as the points in each state share latitudes with the points in the other. We do, however, have far fewer occurences of each GHI level in general because we have filtered our dataset by state and compress the four intrastate points into one. In order to more clearly compare these sets, ee can normalize this data to get distributions that will sum to 1, and tell us the probability that a random day from the dataset lands in a given bar on the histogram.
+
+![alt text](images/GHI_all_norm_1p.png)
+
+![alt text](images/state_GHI_norm_1p.png)
