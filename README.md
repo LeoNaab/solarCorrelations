@@ -63,6 +63,7 @@ Additionally, we can also look at the seasonal average GHI by state. We can see 
 We can also use the variance and covariance to measure different aspects of the data. The variances of GHI, when grouped by state,  are as follows: 
 
 Variance for California: 4550319.795
+
 Variance for New Mexico: 4376524.908
 
 In this case, the high variances show how variable the distribution of GHI values are around the mean, where California has a slightly higher variance than New Mexico. These values indicate how these two states experience different solar radiations throughout the year, which includes seasonal effects. This can also be seen in our previous seasonality plot, where there is a significant difference between the lower producing months (winter, fall) and the higher producing months (spring, summer).
