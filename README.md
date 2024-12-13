@@ -57,6 +57,32 @@ currently not able to be simplified.
 
 It is tempting at first to think that we could sum together many days in an attempt to get a distribition that approximates a normal one due to the central limit theorem, however this is not an option in this case. A main purpose of this paper is to analyze the daily variation in solar resources, so the moment we start summing different days we lose the granularity that we need for strong results.
 
+Additionally, we can also look at the seasonal average GHI by state. We can see how the GHI is affected by the time of year, where the winter and fall seasons see a lower average GHI when compared to the spring and summer seasons. We can also see that for every season except for the winter months, the california solar grid system has a higher average GHI when compared to new mexico. 
+
+![Figure 2](images/seasonal_plot.png)
+
+
+We can also use the variance and covariance to measure different aspects of the data. The variances of GHI, when grouped by state,  are as follows:
+
+INSERT STATE VARIANCES 
+
+In this case, the high variances show how variable the distribution of GHI values are around the mean, where California has a slightly higher variance than New Mexico. These values indicate how these two states experience different solar radiations throughout the year, which includes seasonal effects. This can also be seen in our previous seasonality plot, where there is a significant difference between the lower producing months (winter, fall) and the higher producing months (spring, summer).
+
+Additionally, we can also discuss the covariance matrix, when grouped by state. The covariance between California and New Mexico GHI measures how two variables change together, where the positive correlation indicates that the GHI values for both California and New Mexico generally increase and decrease together. This is potentially due to the geographical proximity and shared climates between the two neighboring states. 
+
+
+Next, we will also be examining the bivariate distribution of GHI between the two states, as seen from the plot below. The X-axis shows the GHI values for California while the Y-axis shows GHI values for New Mexico.
+
+![Figure 2](images/bivariate_plot.png)
+
+
+There is a positive relationship between the GHI values of these California and New Mexico solar panels. This indicates that the higher GHI values in California are generally associated with higher GHI values in New Mexico. This is also consistent with the positive covariance seen in the data as well.
+
+![Figure 2](images/boxplot.png)
+
+In addition, we will also include the state-wise distribution box plot of GHI values. In this plot, each box represents the distribution of GHI values for the two different states. The central line of each box shows the median GHI value while the box’s edges represent the 25th to 75th percentile, which captures the middle 50% of the data. Based on the plot, both states have a similar range of GHI values, with extremely similar values for the maximum and minimum. California’s GHI values have slightly higher variability, as the box is slightly wider, aligning with the higher variance. Through the plot, we can also see that the median values for both states are also similar with New Mexico being slightly lower than that of California. 
+
+
 We can, however, take this data gathered from eight points, four in California and four in New Mexico, and take their average. This would be equivalent to spreading generation resources out across these points. First, we can look at the results we get from each state after averaging the GHI from the four locations within.
 
 ![alt text](images/GHI_state_average.png)
@@ -66,3 +92,4 @@ We can see that these states have very similar value spreads, which is somewhat 
 ![alt text](images/GHI_all_norm_1p.png)
 
 ![alt text](images/state_GHI_norm_1p.png)
+
