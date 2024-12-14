@@ -3,6 +3,7 @@ import pandas as pd
 import seaborn as sns
 import numpy as np
 
+
 # Data ideas
 # 1% low (state vs interstate)
 # covariance (between state points vs interstate)
@@ -205,20 +206,71 @@ if __name__ == "__main__":
     daily_data = daily_data[daily_data["Year"] != 2002] # type: ignore
 
     #Histogram of the plots
-    hist_plot_all(daily_data)
-    hist_plot_each_state(daily_data)
-    hist_plot_all_norm(daily_data)
-    hist_plot_each_state_norm(daily_data)
-    hist_plot_avg_norm(daily_data)
-    #Variance by state
-    variances = calculate_variance_by_states(daily_data)
-    #Covariance by state
-    calculate_covariance_between_states(daily_data)
-    #Bivariate plots
-    plot_bivariate_distribution(daily_data, "cal", "nm")
-    # Plotting GHI based off of seasons
-    seasonal_analysis(daily_data)
-    # Plotting the distribution based off of states
-    plot_statewise_distribution(daily_data)
-    #My attempt at a one_percent (bottom and top 1%)
-    one_percent(daily_data)
+    # hist_plot_all(daily_data)
+    # hist_plot_each_state(daily_data)
+    # hist_plot_all_norm(daily_data)
+    # hist_plot_each_state_norm(daily_data)
+    # hist_plot_avg_norm(daily_data)
+    # #Variance by state
+    # variances = calculate_variance_by_states(daily_data)
+    # #Covariance by state
+    # calculate_covariance_between_states(daily_data)
+    # #Bivariate plots
+    # plot_bivariate_distribution(daily_data, "cal", "nm")
+    # # Plotting GHI based off of seasons
+    # seasonal_analysis(daily_data)
+    # # Plotting the distribution based off of states
+    # plot_statewise_distribution(daily_data)
+    # #My attempt at a one_percent (bottom and top 1%)
+    # one_percent(daily_data)
+
+    # Standard Deviations
+    cal1 = daily_data[(daily_data["state"] == "cal") & (daily_data["lat"] == 33) & (daily_data["lon"] == -115)]
+    cal2 = daily_data[(daily_data["state"] == "cal") & (daily_data["lat"] == 35) & (daily_data["lon"] == -115)]
+    cal3 = daily_data[(daily_data["state"] == "cal") & (daily_data["lat"] == 33) & (daily_data["lon"] == -117)]
+    cal4 = daily_data[(daily_data["state"] == "cal") & (daily_data["lat"] == 35) & (daily_data["lon"] == -117)]
+
+    nm1 = daily_data[(daily_data["state"] == "nm") & (daily_data["lat"] == 33) & (daily_data["lon"] == -104)]
+    nm2 = daily_data[(daily_data["state"] == "nm") & (daily_data["lat"] == 35) & (daily_data["lon"] == -104)]
+    nm3 = daily_data[(daily_data["state"] == "nm") & (daily_data["lat"] == 33) & (daily_data["lon"] == -106)]
+    nm4 = daily_data[(daily_data["state"] == "nm") & (daily_data["lat"] == 35) & (daily_data["lon"] == -106)]
+
+    print("California average of stds:")
+    cal_avg_of_stds = (cal1["GHI"].std() + cal2["GHI"].std() + cal3["GHI"].std() + cal4["GHI"].std())/4
+    print(cal_avg_of_stds, "\n")
+    # print(cal2["GHI"].std())
+    # print(cal3["GHI"].std())
+    # print(cal4["GHI"].std())
+
+
+    print("California std of average GHI:")
+    cal_std_of_avg = state_daily_average(daily_data, "cal")["GHI"].std()
+    print(cal_std_of_avg,"\n")
+
+    print("New Mexico average of stds:")
+    nm_avg_of_stds = (nm1["GHI"].std() + nm2["GHI"].std() + nm3["GHI"].std() + nm4["GHI"].std())/4
+    print(nm_avg_of_stds,"\n")
+    # print(nm2["GHI"].std())
+    # print(nm3["GHI"].std())
+    # print(nm4["GHI"].std())
+
+    print("New Mexico std of average GHI:")
+    nm_std_of_avg = state_daily_average(daily_data, "nm")["GHI"].std()
+    print(nm_std_of_avg, "\n")
+
+    print("Two state average of stds")
+    interstate_avg_of_stds = ((nm_std_of_avg + cal_std_of_avg)/2)
+    print(interstate_avg_of_stds, "\n")
+
+    print("Two state std of average:")
+    interstate_std = interstate_daily_average(daily_data)["GHI"].std()
+    print(interstate_std, "\n")
+
+    print("ratio of New Mexico avg of stds to std of avg:")
+    print(nm_avg_of_stds/nm_std_of_avg)
+
+    print("ratio of California avg of stds to std of avg:")
+    print(cal_avg_of_stds/cal_std_of_avg)
+
+    print("ratio of interstate avg of stds to std of interstate avg:")
+    print(((nm_std_of_avg + cal_std_of_avg)/2)/interstate_std)
