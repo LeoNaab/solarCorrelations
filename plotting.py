@@ -19,7 +19,7 @@ def hist_plot_all(daily_data):
     plt.hist(x=daily_data["GHI"], bins = 200)
     plt.title("California and New Mexico Daily GHI, 1998-2023")
     plt.xlabel("GHI (W•h/m^2)")
-    plt.ylabel("Occurences")
+    plt.ylabel("Occurrences")
     plt.show()
 
 def hist_plot_each_state(daily_data):
@@ -29,14 +29,14 @@ def hist_plot_each_state(daily_data):
     plt.subplot(1, 2, 1)
     plt.hist(x=cal_data["GHI"], bins = 200)
     plt.title("California (4 point average), 1998-2023")
-    plt.xlabel("GHI (W•h/m^2")
-    plt.ylabel("Occurences")
+    plt.xlabel("GHI (W•h/m^2)")
+    plt.ylabel("Occurrences")
 
     plt.subplot(1, 2, 2)
     plt.hist(x=nm_data["GHI"], bins = 200)
     plt.title("New Mexico (4 point average), 1998-2023")
-    plt.xlabel("GHI (W•h/m^2")
-    plt.ylabel("proportion of occurences")
+    plt.xlabel("GHI (W•h/m^2)")
+    plt.ylabel("proportion of occurrences")
 
     plt.show()
 
@@ -46,7 +46,21 @@ def hist_plot_all_norm(daily_data):
     plt.hist(x=daily_data["GHI"], bins = 200, density=True)
     plt.title("California and New Mexico Daily GHI, 1998-2023")
     plt.xlabel("GHI (W•h/m^2)")
-    plt.ylabel("proportion of occurences")
+    plt.ylabel("proportion of occurrences")
+    line = plt.axvline(low, c="red", ls="--", label=f"1% low: {low} W•h/m^2")
+    plt.legend(handles=[line])
+
+    plt.show()
+
+def hist_plot_avg_norm(daily_data):
+    grouped_data = interstate_daily_average(daily_data)
+
+    low = n_percent_low(grouped_data, 1)["GHI"].max()
+
+    plt.hist(x=grouped_data["GHI"], bins = 200, density=True)
+    plt.title("8-Point Average Daily GHI, 1998-2023")
+    plt.xlabel("GHI (W•h/m^2)")
+    plt.ylabel("proportion of occurrences")
     line = plt.axvline(low, c="red", ls="--", label=f"1% low: {low} W•h/m^2")
     plt.legend(handles=[line])
 
@@ -62,16 +76,16 @@ def hist_plot_each_state_norm(daily_data):
     plt.subplot(1, 2, 1)
     plt.hist(x=cal_data["GHI"], bins = 200, density=True)
     plt.title("California (4 point average), 1998-2023")
-    plt.xlabel("GHI (W•h/m^2")
-    plt.ylabel("proportion of occurences")
+    plt.xlabel("GHI (W•h/m^2)")
+    plt.ylabel("proportion of occurrences")
     line = plt.axvline(cal_low, c="red", ls="--", label=f"1% low: {cal_low} W•h/m^2")
     plt.legend(handles=[line])
 
     plt.subplot(1, 2, 2)
     plt.hist(x=nm_data["GHI"], bins = 200, density=True)
     plt.title("New Mexico (4 point average), 1998-2023")
-    plt.xlabel("GHI (W•h/m^2")
-    plt.ylabel("proportion of occurences")
+    plt.xlabel("GHI (W•h/m^2)")
+    plt.ylabel("proportion of occurrences")
     line = plt.axvline(nm_low, c="red", ls="--", label=f"1% low: {nm_low} W•h/m^2")
     plt.legend(handles=[line])
 
@@ -195,6 +209,7 @@ if __name__ == "__main__":
     hist_plot_each_state(daily_data)
     hist_plot_all_norm(daily_data)
     hist_plot_each_state_norm(daily_data)
+    hist_plot_avg_norm(daily_data)
     #Variance by state
     variances = calculate_variance_by_states(daily_data)
     #Covariance by state
