@@ -120,4 +120,39 @@ of the solar energy received.
 
 ![alt text](images/state_GHI_norm_1p.png)
 
+Here we can see significant benefit again from averaging energy collection across all 8 points in this paper. The 1% low
+of 2076 W•h/m^2 now represents roughly double the 1% low expected when looking at individual 4km x 4km squares. Again, the higher
+1% low is an expected result of increasing the number of averaged points. We see that quadrupling the points within a state is roughly
+equivalent to averaging double the points across states. In order to categorize the value of this increase, we must
+move on to analyzing the variance or standard deviation.
+
 ![alt text](images/avg_GHI_norm_1p.png)
+
+#### Standard Deviations
+
+Calculating the average standard deviation of each point versus the standard deviation of the average of points within each state can give us an idea of how beneficial it is
+to spread out power within a state. Taking all 8 points, and looking at the standard deviation compared to the former test, can give us
+an idea of how useful it is to link grids in order to increase power grid predictability.
+
+| Location              | Average of STDs | STD of Average | Ratio | Number of Points (N) |
+|-----------------------|----------------|----------------|-------|----|
+| New Mexico           |2089             |1990            |1.042  | 4 |
+| California           |2123             |2038            |1.050  | 4 |
+| New Mexico and California |  2014      |1925            |1.046  | 2 |
+
+We can clearly see that these variables are far from independence. In the case of Independence, the ratio
+would be the square root of N. This again confirms that two points from different states minimize the variance
+as much as four points spread out in the same state.
+
+
+## Conclusion
+
+Through this analysis, we have found significant correlation between all points involved in the analysis.
+However, it was significantly beneficial both to spread generation out across each state, and across two states,
+in order to lower variance and increase the one-percent-low performance level. From this we can say that in order
+to minimize variance in solar energy supply, pursuing the distribution of generation resources within states and
+across states using HVDC lines is a realistic option. Importantly, distribution across states still has a string
+affect on lowering variance even after variance has been minimized through intra-state distribution.
+
+Furthermore, as the realities of solar energy imply that both the California and New Mexico grid will already have significant
+distribution within each state, it is likely that there is more to gain via connecting the California and New Mexico grid.
