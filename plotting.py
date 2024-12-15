@@ -2,6 +2,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import seaborn as sns
 import numpy as np
+from itertools import combinations
 
 
 # Data ideas
@@ -192,7 +193,35 @@ def one_percent(daily_data: pd.DataFrame):
     print("Bottom 1% Low GHI Days: ", bottom_1_percent)
     return top_1_percent, bottom_1_percent
 
+def calculate_covariance_between_points(data: pd.DataFrame):
 
+    # Extract unique (lat, lon) pairs
+    locations = data.groupby(['lat', 'lon'])['GHI'].apply(list).reset_index()
+    location_pairs = list(combinations(locations.index, 2))
+
+    for idx in locations.index:
+        location_pairs.append((idx, idx))
+    cov_results = []
+
+    for idx1, idx2 in location_pairs:
+        loc1 = locations.iloc[idx1]
+        loc2 = locations.iloc[idx2]
+
+        ghi1 = loc1['GHI']
+        ghi2 = loc2['GHI']
+        min_len = min(len(ghi1), len(ghi2))
+        ghi1 = np.array(ghi1[:min_len])
+        ghi2 = np.array(ghi2[:min_len])
+
+        covariance = np.cov(ghi1, ghi2)[0, 1]
+
+        cov_results.append({
+            'Point 1': (loc1['lat'], loc1['lon']),
+            'Point 2': (loc2['lat'], loc2['lon']),
+            'Covariance': covariance
+        })
+    covariance_df = pd.DataFrame(cov_results)
+    return covariance_df
 
 
 
