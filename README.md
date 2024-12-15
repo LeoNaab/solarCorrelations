@@ -3,7 +3,7 @@ ECE 225A project analyzing solar energy resource correlations across states.
 
  ## Introduction:
 Low cost solar power has rapidly transformed new electricity supply in the United States.
-Photovoltaics account for more than half of new generation capacity as of 2024 [CITATION]. As the
+Photovoltaics account for more than half of new generation capacity as of 2024 (EIA).
 price of solar continues to go down, it is only expected to play a larger role in the future of electrical grids.
 
 But even while solar has been a significant favorite in recent years to older generation technology, due to its renewable
@@ -25,13 +25,13 @@ We will use a variety of techniques to get an understanding of the relationship 
 categorize the benefit this could provide when an electrical grid relies mainly solar power.
 
 The unit we will be analyzing is global horizontal irradiance (GHI) measured in Watts per meter squared. The GHI is th amount of
-sunlight landing on a square meter of earth at any given time (https://pvpmc.sandia.gov/modeling-guide/1-weather-design-inputs/irradiance-insolation/global-horizontal-irradiance/). Measuring the GHI and integrating the results over one day would
+sunlight landing on a square meter of earth at any given time (Sandia). Measuring the GHI and integrating the results over one day would
 give you the total solar energy that landed on the earth, per square meter, in that location. This is one of the measurements Sandia
 National Laboratories uses in its PV Performance Modelling Collaborative, so it is a good proxy for solar panel performance in this paper.
 
  ### Dataset
-Our dataset comes from the National Solar Radiation Database (NSRDB). The NSRDB uses a set of four satellites measuring various
-meteorological properties in order to measure GHI, which they measure in four kilometer by four kilometer squares(https://nsrdb.nrel.gov/about/what-is-the-nsrdb).
+Our dataset comes from the National Solar Radiation Database, (NSRDB). The NSRDB uses a set of four satellites measuring various
+meteorological properties in order to measure GHI, which they measure in four kilometer by four kilometer squares (NSRDB).
 Using this dataset, we can gather information on the GHI for any 4x4 kilometer region from 1998 to 2023. This data comes as hourly
 averages for things like the GHI.
 
@@ -55,12 +55,12 @@ Ultimately, we want to conclude whether projects like the SunZia HVDC power line
 to do this we need to show that the correlation between these two states are sufficiently lower than the intrastate correlation.
 We can also show the minimization of variance by taking the average across the 8 points and plotting those results.
 
-We know from the Bienayme formula that if we are averaging uncorrelated random variables of equal distribution then we should expect to see
-the variance is divided by the number of samples. We can use this property to measure the benefit the variance receives in our dataset
-versus the ideal of uncorrelated variables. And ideally, the average across the states should be closer to showing a decrease in variance
-near 1/(sample count).
+We know from the standard error formula that if we are averaging uncorrelated random variables of equal distribution then we should expect to see
+the standard deviation to be divided by the square root of samples. We can use this property to measure the benefit the variance receives in our dataset
+versus the ideal of uncorrelated variables. And ideally, the average across the states should be closer to showing a decrease in standard deviation
+near one over the square root of samples.
 
-Looking beyond variance and correlation, we can also measure the one-percent low solar performance, as in a grid that wants to support
+Looking beyond variance and correlation, we can also measure the one percent low solar performance, as in a grid that wants to support
 itself 99% of the time with a certain amount of solar energy, the solar plants would need to be sized based on this one percent low.
 We can compare the change in one percent low from first averaging the four points in each state, and then by averaging the two states
 together. We can do this to look at a more realistic result of how connecting the California and New Mexico grids could help with
@@ -78,7 +78,8 @@ currently not able to be simplified.
 
 It is tempting at first to think that we could sum together many days in an attempt to get a distribition that approximates a normal one due to the central limit theorem, however this is not an option in this case. A main purpose of this paper is to analyze the daily variation in solar resources, so the moment we start summing different days we lose the granularity that we need for strong results.
 
-Additionally, we can also look at the seasonal average GHI by state. We can see how the GHI is affected by the time of year, where the winter and fall seasons see a lower average GHI when compared to the spring and summer seasons. We can also see that for every season except for the winter months, the california solar grid system has a higher average GHI when compared to new mexico.
+### Comparing California and New Mexico
+One way we can compare California and New Mexicco is to look at the seasonal average GHI by state. We can see how the GHI is affected by the time of year, where the winter and fall seasons see a lower average GHI when compared to the spring and summer seasons. We can also see that for every season except for the winter months, the california solar grid system has a higher average GHI when compared to new mexico.
 
 ![Figure 2](images/seasonal_plot.png)
 
@@ -104,7 +105,7 @@ There is a positive relationship between the GHI values of these California and 
 In addition, we will also include the state-wise distribution box plot of GHI values. In this plot, each box represents the distribution of GHI values for the two different states. The central line of each box shows the median GHI value while the box’s edges represent the 25th to 75th percentile, which captures the middle 50% of the data. Based on the plot, both states have a similar range of GHI values, with extremely similar values for the maximum and minimum. California’s GHI values have slightly higher variability, as the box is slightly wider, aligning with the higher variance. Through the plot, we can also see that the median values for both states are also similar with New Mexico being slightly lower than that of California.
 
 ### Averaging
-We can, however, take this data gathered from eight points, four in California and four in New Mexico, and take their average. This would be equivalent to spreading generation resources out across these points. First, we can look at the results we get from each state after averaging the GHI from the four locations within.
+We can take this data gathered from eight points, four in California and four in New Mexico, and take their average. This would be equivalent to spreading generation resources out across these points. First, we can look at the results we get from each state after averaging the GHI from the four locations within.
 
 ![alt text](images/GHI_state_average.png)
 
@@ -156,3 +157,11 @@ affect on lowering variance even after variance has been minimized through intra
 
 Furthermore, as the realities of solar energy imply that both the California and New Mexico grid will already have significant
 distribution within each state, it is likely that there is more to gain via connecting the California and New Mexico grid.
+
+## References
+
+“U.S. Power Grid Added 20.2 GW of Generating Capacity in the First Half of 2024 - U.S. Energy Information Administration (EIA).” Eia.gov, 2024, www.eia.gov/todayinenergy/detail.php?id=62864.
+
+“Global Horizontal Irradiance.” PV Performance Modeling Collaborative (PVPMC), pvpmc.sandia.gov/modeling-guide/1-weather-design-inputs/irradiance-insolation/global-horizontal-irradiance/.
+
+“NSRDB.” Nsrdb.nrel.gov, nsrdb.nrel.gov/about/what-is-the-nsrdb.
